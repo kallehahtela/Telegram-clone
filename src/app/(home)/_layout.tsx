@@ -9,7 +9,6 @@ export default function HomeLayout() {
         return <Redirect href={"/(auth)/login"} />;
     }
 
-
     return (
         <ChatProvider>
             <Stack>
