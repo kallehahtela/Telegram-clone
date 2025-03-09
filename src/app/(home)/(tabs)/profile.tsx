@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../../lib/supabase'
-import { StyleSheet, View, Alert } from 'react-native'
+import { StyleSheet, View, Alert, ScrollView } from 'react-native'
 import { Button, Input } from '@rneui/themed'
 import { Session } from '@supabase/supabase-js'
 import { useAuth } from '../../../providers/AuthProvider'
+import Avatar from '../../../components/Avatar'
 
 export default function ProfileScreen() {
     const { session } = useAuth();
@@ -86,18 +87,34 @@ export default function ProfileScreen() {
     }
 
     return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+        <View style={{ alignItems: 'center' }}>
+            <Avatar
+            size={200}
+            url={avatarUrl}
+            onUpload={(url: string) => {
+                setAvatarUrl(url)
+                updateProfile({ 
+                    username, 
+                    website, 
+                    avatar_url: url, 
+                    full_name: fullName 
+                });
+            }}
+            />
+        </View>
+
         <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
+            <Input label="Email" value={session?.user?.email} disabled />
         </View>
         <View style={styles.verticallySpaced}>
-        <Input label="Full Name" value={fullName || ''} onChangeText={(text) => setFullname(text)} />
+            <Input label="Full Name" value={fullName || ''} onChangeText={(text) => setFullname(text)} />
         </View>
         <View style={styles.verticallySpaced}>
-        <Input label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
+            <Input label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
         </View>
         <View style={styles.verticallySpaced}>
-        <Input label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
+            <Input label="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
         </View>
 
         <View style={[styles.verticallySpaced, styles.mt20]}>
@@ -114,9 +131,9 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+            <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
         </View>
-    </View>
+    </ScrollView>
     )
 }
 

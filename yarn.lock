@@ -3581,6 +3581,13 @@ expo-image-manipulator@*, expo-image-manipulator@~13.0.6:
   dependencies:
     expo-image-loader "~5.0.0"
 
+expo-image-picker@*, expo-image-picker@~16.0.6:
+  version "16.0.6"
+  resolved "https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-16.0.6.tgz"
+  integrity sha512-HN4xZirFjsFDIsWFb12AZh19fRzuvZjj2ll17cGr19VNRP06S/VPQU3Tdccn5vwUzQhOBlLu704CnNm278boiQ==
+  dependencies:
+    expo-image-loader "~5.0.0"
+
 expo-keep-awake@~14.0.3:
   version "14.0.3"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-14.0.3.tgz"
