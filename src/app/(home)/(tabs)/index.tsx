@@ -1,4 +1,4 @@
-import { Link, router, Stack } from "expo-router";
+import { Link, Redirect, router, Stack } from "expo-router";
 import { ChannelList } from "stream-chat-expo";
 import { useAuth } from "../../../providers/AuthProvider";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -8,6 +8,8 @@ export default function MainTabScreen() {
 
     return (
         <>
+            {/* Delete Later */}
+            <Redirect href={"/(home)/call"} />
             <Stack.Screen options={{
                 headerRight: () => (
                     <Link href={"/(home)/users"} asChild>
