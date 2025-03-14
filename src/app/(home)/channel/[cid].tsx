@@ -1,15 +1,19 @@
-import { useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Channel as ChannelType } from 'stream-chat';
 import { Channel, MessageInput, MessageList, useChatContext } from "stream-chat-expo";
+import { Ionicons } from '@expo/vector-icons';
+import { useStreamVideoClient } from "@stream-io/video-react-native-sdk";
+import * as Crypto from 'expo-crypto';
 
 export default function ChannelScreen() {
     const [channel, setChannel] = useState<ChannelType | null>();
     const { cid } = useLocalSearchParams<{cid: string}>();
 
     const { client } = useChatContext();
+    const videoClient = useStreamVideoClient();
 
     useEffect(() => {
         const fetchChannel = async () => {
@@ -18,7 +22,26 @@ export default function ChannelScreen() {
         }
 
         fetchChannel();
-    }, [cid])
+    }, [cid]);
+
+    const joinCall = async() => {
+        const members = Object.values(channel.state.members).map(member => ({ 
+            user_id: member.user?.id, 
+        }));
+
+        console.log(members);
+
+        // create a call usign the channel member
+        const call = videoClient.call('default', Crypto.randomUUID());
+        await call.getOrCreate({
+            data: {
+                members,
+            },
+        });
+
+        // navigate to the call screen
+        router.push('/call');
+    }
 
     if (!channel) {
         return <ActivityIndicator />;
@@ -26,6 +49,10 @@ export default function ChannelScreen() {
 
     return (
         <Channel channel={channel} audioRecordingEnabled={true}>
+            <Stack.Screen options={{ title: 'Channel', headerRight: () => (
+                <Ionicons name="call" size={20} color="gray" onPress={joinCall}/>
+                )}} 
+            />
             <MessageList />
             <SafeAreaView edges={['bottom']}>
                 <MessageInput />
