@@ -18,6 +18,7 @@
       "supportsTablet": true,
       "bitcode": false,
       "bundleIdentifier": "com.anonymous.Telegram",
+      "googleServiceFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -27,6 +28,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "googleServiceFile": "./google-services.json",
       "permissions": [
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_CONNECT",
@@ -54,6 +56,9 @@
             "extraMavenRepos": [
               "../../node_modules/@notifee/react-native/android/libs"
             ]
+          },
+          "ios": {
+            "useFrameworks": "static"
           }
         }
       ],
@@ -64,7 +69,9 @@
           "cameraPermission": "$(PRODUCT_NAME) requires camera access in order to capture and transmit video",
           "microphonePermission": "$(PRODUCT_NAME) requires microphone access in order to capture and transmit audio"
         }
-      ]
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/messaging"
     ],
     "extra": {
       "router": {
